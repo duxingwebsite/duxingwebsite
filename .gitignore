@@ -1,0 +1,11 @@
+# Folder
+venv/
+__pycache__/
+media/
+migrations/
+whoosh_index/
+.idea/
+.git/
+
+# File
+*.sqlite3
