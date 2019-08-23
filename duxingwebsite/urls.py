@@ -24,9 +24,11 @@ urlpatterns = [
     # 管理界面
     path('admin/', admin.site.urls),
     # 网站图标
-    # url(r'^favicon\.ico$', RedirectView.as_view(url='/static/picture/favicon.png')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/picture/favicon.png')),
     # 主页
     path('', include('index.urls', namespace='index')),
+    # 博客
+    path('blog/', include('blog.urls', namespace='blog')),
     # 媒体文件
-    # url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

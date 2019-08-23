@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Posts</h1>
+{% for post in post_list %}
+    <div>topic: {{ post.topic }}</div>
+    <div>body: {{ post.body }}</div>
+    <div>author: {{ post.author }}</div>
+{% endfor %}
+</body>
+</html>
