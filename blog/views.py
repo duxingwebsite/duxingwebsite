@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TodayArchiveView, YearArchiveView, MonthArchiveView, \
+    DayArchiveView
 from django.db.models import F
 from .models import Post, Tag, Category
 
@@ -73,6 +74,60 @@ class TagView(CategoryView):
     def get_queryset(self):
         tags = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
         return super().get_queryset().filter(tags=tags)
+
+
+class PostTodayArchive(TodayArchiveView):
+    allow_empty = True
+    allow_future = False
+    context_object_name = 'post_list'
+    template_name = 'blog/archive.html'
+    http_method_names = [u'get', ]
+    model = Post
+    date_field = 'create_date'
+    paginate_by = 50
+    make_object_list = True
+
+
+class PostYearArchive(YearArchiveView):
+    allow_empty = True
+    allow_future = False
+    context_object_name = 'post_list'
+    template_name = 'blog/archive.html'
+    http_method_names = [u'get', ]
+    model = Post
+    date_field = 'create_date'
+    year_format = '%Y'
+    paginate_by = 50
+    make_object_list = True
+
+
+class PostMonthArchive(MonthArchiveView):
+    allow_empty = True
+    allow_future = False
+    context_object_name = 'post_list'
+    template_name = 'blog/archive.html'
+    http_method_names = [u'get', ]
+    model = Post
+    date_field = 'create_date'
+    year_format = '%Y'
+    month_format = '%m'
+    paginate_by = 50
+    make_object_list = True
+
+
+class PostDayArchive(DayArchiveView):
+    allow_empty = True
+    allow_future = False
+    context_object_name = 'post_list'
+    template_name = 'blog/archive.html'
+    http_method_names = [u'get', ]
+    model = Post
+    date_field = 'create_date'
+    year_format = '%Y'
+    month_format = '%m'
+    day_format = '%d'
+    paginate_by = 50
+    make_object_list = True
 
 
 class PostView(DetailView):

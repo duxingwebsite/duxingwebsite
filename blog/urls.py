@@ -13,4 +13,9 @@ urlpatterns = [
     url(r'^category/(?P<slug>[^\\.]+)/$', views.CategoryView.as_view(), name='category'),
     # 标签页面
     url(r'^tag/(?P<slug>[^\\.]+)/$', views.TagView.as_view(), name='tag'),
+    # 归档页面
+    url(r'^archive/$', views.PostTodayArchive.as_view(), name='archive'),
+    url(r'^archive/(?P<year>\d{4})/$', views.PostYearArchive.as_view()),
+    url(r'^archive/(?P<year>\d{4})/(?P<month>\d{2})/$', views.PostMonthArchive.as_view()),
+    url(r'^archive/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$', views.PostDayArchive.as_view()),
 ]
