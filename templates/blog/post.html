@@ -1,11 +1,15 @@
+{% load blog_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="{% static 'md_css/monokai.css' %}" rel="stylesheet"/>
 </head>
 <body>
 <div>{{ post.topic }}</div>
-<div>{{ post.body }}</div>
+{% markdown_text post.body as body %}
+<div>{{ body|safe }}</div>
 </body>
 </html>

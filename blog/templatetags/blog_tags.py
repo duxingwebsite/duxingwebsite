@@ -81,11 +81,18 @@ def get_category_count():
 @register.simple_tag
 def markdown_text(text):
     """markdown渲染"""
+    config = {
+        'codehilite': {
+            'use_pygments': True,
+        }
+    }
     html = markdown.markdown(text,
                              extensions=[
                                  'markdown.extensions.extra',
                                  'markdown.extensions.codehilite',
-                             ])
+                                 "markdown.extensions.toc",
+                             ],
+                             extensions_configs=config)
     return html
 
 
