@@ -29,6 +29,8 @@ urlpatterns = [
     path('', include('index.urls', namespace='index')),
     # 博客
     path('blog/', include('blog.urls', namespace='blog')),
+    # 招新
+    path('recruitment/', include('recruitment.urls', namespace='recruitment')),
     # 媒体文件
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 
 """定义url模式"""
-app_name = 'index'
+app_name = 'blog'
 
 urlpatterns = [
     # 主页
