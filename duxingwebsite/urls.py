@@ -24,7 +24,7 @@ urlpatterns = [
     # 管理界面
     path('admin/', admin.site.urls),
     # 网站图标
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/picture/favicon.png')),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon/favicon.png')),
     # 主页
     path('', include('index.urls', namespace='index')),
     # 博客

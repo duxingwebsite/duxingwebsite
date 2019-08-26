@@ -1,16 +1,12 @@
+{% extends 'blog/base.html' %}
 {% load blog_tags %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% block css %}
     <link href="{% static 'css/monokai.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/han.css' %}" rel="stylesheet"/>
-</head>
-<body>
-<div>{{ post.topic }}</div>
-{% markdown_text post.body as body %}
-<div>{{ body|safe }}</div>
-</body>
-</html>
+{% endblock css %}
+{% block content %}
+    {% markdown_text post.body as body %}
+    <div class="col-lg-9" id="write">{{ body|safe }}</div>
+    <div class="col-lg-3"></div>
+{% endblock content %}

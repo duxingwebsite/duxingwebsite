@@ -9,3 +9,4 @@ whoosh_index/
 
 # File
 *.sqlite3
+bootstrap.css
