@@ -1,16 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Posts</h1>
-{% for post in post_list %}
-    <div>topic: {{ post.topic }}</div>
-    <div>body: {{ post.body }}</div>
-    <div>author: {{ post.author }}</div>
-    <div>category: {{ post.category }}</div>
-{% endfor %}
-</body>
-</html>
+{% extends 'index/base.html' %}
+{% load static %}
+{% load blog_tags %}
+{% block css %}
+    <link href="{% static 'css/monokai.css' %}" rel="stylesheet"/>
+{% endblock css %}
+{% block content %}
+    <div class="col-lg-9 pr-lg-5" id="write">
+        {% for post in post_list %}
+            <div class="post">
+                <h1 class="pb-0 mb-0 border-0"><a href="{% url 'blog:post' post.slug %}">{{ post.topic }}</a></h1>
+                <p class="text-muted pb-4 border-bottom pl-1">{{ post.create_date|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;&nbsp;{{ post.author }}</p>
+
+                {% markdown_text post.summary as summary %}
+                <div class="pl-4 pr-4">
+                    {% if post.cover %}
+                        <img class="img-fluid" src="/media/{{ post.cover }}" alt="">
+                    {% endif %}
+                    {{ summary|safe }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-lg-3 border-left">
+        <div class="card mt-5 border-0">
+            <div class="card-header bg-transparent">
+                Category
+            </div>
+            <ul class="list-group list-group-flush">
+                {% get_categories as categories %}
+                {% for category in categories %}
+                    {% get_article_count_in_a_category category as count %}
+                    <li class="list-group-item border-0 pt-0"><a
+                            href="{% url 'blog:category' category.slug %}">{{ category.slug }}</a><span
+                            class="text-muted"> ({{ count }})</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

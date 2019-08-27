@@ -1,15 +1,66 @@
 {% extends 'index/base.html' %}
 {% load blog_tags %}
 {% load static %}
-{% block css %}
-    <link href="{% static 'css/monokai.css' %}" rel="stylesheet"/>
-{% endblock css %}
 {% block content %}
     {% markdown_text post.body as body %}
-    <div class="col-lg-9 pr-lg-5" id="write">{{ body|safe }}</div>
+    <div class="col-lg-9 pr-lg-5" id="write">
+        <div>
+            <h1 class="pb-0 mb-0 border-0"><a href="{% url 'blog:post' post.slug %}">{{ post.topic }}</a></h1>
+            <p class="text-muted pb-4 border-bottom pl-1">{{ post.create_date|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;&nbsp;{{ post.author }}</p>
+
+            {% markdown_text post.body as body %}
+            <div class="pl-4 pr-4">
+                {% if post.cover %}
+                    <img class="img-fluid" src="/media/{{ post.cover }}" alt="">
+                {% endif %}
+                {{ body|safe }}
+            </div>
+        </div>
+
+        <div>
+            <form
+                    action="{% url 'comment:post_comment' post.id %}"
+                    method="POST"
+            >
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                        <strong>
+                            我也要发言：
+                        </strong>
+                    </label>
+                    <textarea
+                            type="text"
+                            class="form-control"
+                            id="body"
+                            name="body"
+                            rows="2"></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary ">发送</button>
+            </form>
+        </div>
+        <div>
+            {% get_post_comments post.id as comments %}
+            {% for comment in comments %}
+                <hr>
+                <p>
+                    <strong style="color: pink">
+                        {{ comment.user }}
+                    </strong> 于
+                    <span style="color: green">
+                    {{ comment.created_date|date:"Y-m-d H:i:s" }}
+                </span> 时说：
+                </p>
+                <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
+            {% endfor %}
+        </div>
+    </div>
+
+
     <div class="col-lg-3 border-left">
         <div class="card mt-5 border-0">
-            <div class="card-header border-0 bg-transparent">
+            <div class="card-header bg-transparent">
                 Category
             </div>
             <ul class="list-group list-group-flush">

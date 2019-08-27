@@ -9,18 +9,21 @@
         {% for post in post_list %}
             <div class="post">
                 <h1 class="pb-0 mb-0 border-0"><a href="{% url 'blog:post' post.slug %}">{{ post.topic }}</a></h1>
-                <b class="text-muted">2019.6.28 — Chandelure</b>
-                {% if post.cover %}
-                    <img src="/media/{{ post.cover }}" alt="">
-                {% endif %}
+                <p class="text-muted pb-4 border-bottom pl-1">{{ post.create_date|date:'Y-m-d' }}&nbsp;&nbsp;&nbsp;&nbsp;{{ post.author }}</p>
+
                 {% markdown_text post.summary as summary %}
-                <div>{{ summary|safe }}</div>
+                <div class="pl-4 pr-4">
+                    {% if post.cover %}
+                        <img class="img-fluid" src="/media/{{ post.cover }}" alt="">
+                    {% endif %}
+                    {{ summary|safe }}
+                </div>
             </div>
         {% endfor %}
     </div>
     <div class="col-lg-3 border-left">
         <div class="card mt-5 border-0">
-            <div class="card-header border-0 bg-transparent">
+            <div class="card-header bg-transparent">
                 Category
             </div>
             <ul class="list-group list-group-flush">

@@ -1,4 +1,5 @@
 from ..models import Post, Tag, Category
+from comment.models import Comment
 from django.db.models.aggregates import Count
 from django import template
 import markdown
@@ -91,4 +92,10 @@ def get_post_tags(post):
 @register.simple_tag
 def get_article_count_in_a_category(category):
     """获取某个分类下的文章数量"""
-    return Post.objects.filter(category=category).count()
+    return Post.objects.filter(is_public=True, category=category).count()
+
+
+@register.simple_tag
+def get_post_comments(article_id):
+    """获取某个文章下的评论"""
+    return Comment.objects.filter(article=article_id)

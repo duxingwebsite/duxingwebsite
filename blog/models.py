@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -26,7 +27,7 @@ class Post(models.Model):
         verbose_name_plural = verbose_name
 
     def get_absolute_url(self):
-        return '/post/' + str(self.slug) + '/'
+        return reverse('blog:post', args=[self.slug])
 
 
 class Category(models.Model):
@@ -40,7 +41,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return '/categories/' + str(self.slug) + '/'
+        return reverse('blog:category', args=[self.slug])
 
     class Meta:
         verbose_name = '分类'
@@ -58,7 +59,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return '/tags/' + str(self.slug) + '/'
+        return reverse('blog:tag', args=[self.slug])
 
     class Meta:
         verbose_name = '标签'
