@@ -1,8 +1,37 @@
-{% extends 'blog/base.html' %}
+{% extends 'index/base.html' %}
+{% load static %}
+{% load blog_tags %}
+{% block css %}
+    <link href="{% static 'css/monokai.css' %}" rel="stylesheet"/>
+{% endblock css %}
 {% block content %}
-    {% for post in post_list %}
-        <div>topic: <a href="{% url 'blog:post' post.slug %}">{{ post.topic }}</a> </div>
-        <div>body: {{ post.body }}</div>
-        <div>author: {{ post.author }}</div>
-    {% endfor %}
+    <div class="col-lg-9 pr-lg-5" id="write">
+        {% for post in post_list %}
+            <div class="post">
+                <h1 class="pb-0 mb-0 border-0"><a href="{% url 'blog:post' post.slug %}">{{ post.topic }}</a></h1>
+                <b class="text-muted">2019.6.28 — Chandelure</b>
+                {% if post.cover %}
+                    <img src="/media/{{ post.cover }}" alt="">
+                {% endif %}
+                {% markdown_text post.summary as summary %}
+                <div>{{ summary|safe }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-lg-3 border-left">
+        <div class="card mt-5 border-0">
+            <div class="card-header border-0 bg-transparent">
+                Category
+            </div>
+            <ul class="list-group list-group-flush">
+                {% get_categories as categories %}
+                {% for category in categories %}
+                    {% get_article_count_in_a_category category as count %}
+                    <li class="list-group-item border-0 pt-0"><a
+                            href="{% url 'blog:category' category.slug %}">{{ category.slug }}</a><span
+                            class="text-muted"> ({{ count }})</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

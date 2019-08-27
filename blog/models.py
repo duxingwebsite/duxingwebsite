@@ -7,6 +7,7 @@ class Post(models.Model):
     topic = models.CharField(verbose_name='标题', max_length=200)
     slug = models.CharField(verbose_name='英文标题', max_length=200)
     author = models.ForeignKey(User, verbose_name='作者', null=True, on_delete=models.SET_NULL, auto_created=True)
+    cover = models.ImageField(verbose_name='封面图片', null=True, upload_to='cover')
     summary = models.TextField(verbose_name='摘要')
     body = models.TextField(verbose_name='正文')
     category = models.ForeignKey('Category', verbose_name='分类', null=True, on_delete=models.SET_NULL)

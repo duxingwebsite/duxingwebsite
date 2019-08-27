@@ -1,12 +1,26 @@
-{% extends 'blog/base.html' %}
+{% extends 'index/base.html' %}
 {% load blog_tags %}
 {% load static %}
 {% block css %}
     <link href="{% static 'css/monokai.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/han.css' %}" rel="stylesheet"/>
 {% endblock css %}
 {% block content %}
     {% markdown_text post.body as body %}
-    <div class="col-lg-9" id="write">{{ body|safe }}</div>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-9 pr-lg-5" id="write">{{ body|safe }}</div>
+    <div class="col-lg-3 border-left">
+        <div class="card mt-5 border-0">
+            <div class="card-header border-0 bg-transparent">
+                Category
+            </div>
+            <ul class="list-group list-group-flush">
+                {% get_categories as categories %}
+                {% for category in categories %}
+                    {% get_article_count_in_a_category category as count %}
+                    <li class="list-group-item border-0 pt-0"><a
+                            href="{% url 'blog:category' category.slug %}">{{ category.slug }}</a><span
+                            class="text-muted"> ({{ count }})</span></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock content %}
